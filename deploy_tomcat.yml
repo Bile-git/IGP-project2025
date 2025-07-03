@@ -1,0 +1,19 @@
+---
+- name: Deploy WAR with Docker
+  hosts: app_servers
+  become: true
+  tasks:
+    - name: Pull Docker image
+      docker_image:
+        name: your-dockerhub/your-app
+        source: pull
+
+    - name: Run container
+      docker_container:
+        name: tomcat_container
+        image: your-dockerhub/your-app
+        state: started
+        restart_policy: always
+        ports:
+          - "8080:8080"
+
